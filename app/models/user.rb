@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_many :messages, dependent: :destroy
+  has_many :associations
+  has_many :groups, :through => :associations
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
   validates :name,  presence: true, length: { maximum: 50 }
