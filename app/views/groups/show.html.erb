@@ -5,5 +5,17 @@
         <%= @group.name %>
       </h1>
     </section>
+    <section class="message_form">
+        <%= render 'shared/message_form' %>
+      </section>
   </aside>
+  <div class="col-md-8">
+    <% if @group.users.messages.any? %>
+      <h3>Messages (<%= @group.users.messages.count %>)</h3>
+      <ol class="messages">
+        <%= render @messages %>
+      </ol>
+      <%= will_paginate @messages %>
+    <% end %>
+  </div>
 </div>

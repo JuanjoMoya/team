@@ -7,6 +7,13 @@
 
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
+      <div class="select_users">
+        <%=
+          select_tag :selector,
+          options_from_collection_for_select(User.all, :id, :name),
+          {:multiple => true, id: :select_user}
+         %>
+      </div>
 
       <%= f.submit "Create my group", class: "btn btn-primary" %>
     <% end %>

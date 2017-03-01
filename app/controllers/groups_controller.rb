@@ -1,18 +1,21 @@
 class GroupsController < ApplicationController
+  before_action :logged_in_user, only: [:create, :destroy]
   def index
     @groups = Group.paginate(page: params[:page])
   end
 
   def show
+    @message = current_user.messages.build if logged_in?
     @group = Group.find(params[:id])
   end
 
   def new
+    @user = User.all
     @group = Group.new
   end
 
   def create
-    @group = Group.new(group_params)
+    @group = current_user.groups.build(group_params)
     if @group.save
       flash[:success] = "You have create a new group!"
       redirect_to @group
