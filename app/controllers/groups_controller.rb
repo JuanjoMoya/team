@@ -5,8 +5,8 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @message = current_user.messages.build if logged_in?
     @group = Group.find(params[:id])
+    @messages = current_user.messages.build if logged_in?
   end
 
   def new

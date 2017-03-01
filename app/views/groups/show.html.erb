@@ -10,8 +10,8 @@
       </section>
   </aside>
   <div class="col-md-8">
-    <% if @group.users.messages.any? %>
-      <h3>Messages (<%= @group.users.messages.count %>)</h3>
+    <% if @messages %>
+      <h3>Messages</h3>
       <ol class="messages">
         <%= render @messages %>
       </ol>
