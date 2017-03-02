@@ -1,5 +1,5 @@
 class Group < ApplicationRecord
-  before_save { self.name = name.downcase }
+  # before_save { self.name = name.downcase }
   has_many :associations
   has_many :users, :through => :associations
   validates :name,  presence: true, length: { maximum: 50 },

@@ -9,6 +9,15 @@
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
 
+      <div class="select_users">
+        <%=
+          select_tag "selector",
+          options_from_collection_for_select(User.all, :id, :name, :selected => @users_ids),
+          {:multiple => true, :name => 'test[]'}
+         %>
+      </div>
+
+
       <%= f.submit "Save changes", class: "btn btn-primary" %>
     <% end %>
 

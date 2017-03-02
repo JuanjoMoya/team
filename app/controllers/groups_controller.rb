@@ -6,7 +6,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
-    @messages = current_user.messages.build if logged_in?
+    @message = current_user.messages.build if logged_in?
   end
 
   def new
@@ -15,7 +15,13 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = current_user.groups.build(group_params)
+    @group = Group.create(name: params[:group][:name])
+    @group.users << current_user
+    params[:test].each do |user_id|
+      user = User.find(user_id)
+      @group.users << user
+    end
+
     if @group.save
       flash[:success] = "You have create a new group!"
       redirect_to @group
@@ -26,10 +32,22 @@ class GroupsController < ApplicationController
 
   def edit
     @group = Group.find(params[:id])
+    @users_ids = @group.users.map {|user| user.id }
   end
 
   def update
+
     @group = Group.find(params[:id])
+    @group.users.delete_all
+
+
+    @group.users << current_user
+    params[:test].each do |user_id|
+      user = User.find(user_id)
+      @group.users << user
+    end
+
+
     if @group.update_attributes(group_params)
       flash[:success] = "Group updated"
       redirect_to @group

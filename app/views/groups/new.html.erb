@@ -9,9 +9,9 @@
       <%= f.text_field :name, class: 'form-control' %>
       <div class="select_users">
         <%=
-          select_tag :selector,
+          select_tag "selector",
           options_from_collection_for_select(User.all, :id, :name),
-          {:multiple => true, id: :select_user}
+          {:multiple => true, id: :select_user, :name => 'test[]'}
          %>
       </div>
 
