@@ -1,12 +1,17 @@
 class GroupsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy]
   def index
-    @groups = Group.paginate(page: params[:page])
+    # @groups = Group.paginate(page: params[:page])
+    @groups = current_user.groups.paginate(page: params[:page])
   end
 
   def show
     @group = Group.find(params[:id])
     @message = current_user.messages.build if logged_in?
+    # @messages = @group.messages.paginate(page: params[:page])
+    # @messages = Message.@group.paginate(page: params[:page])
+    @messages = Message.where("group_id = ?", @group).paginate(page: params[:page])
+
   end
 
   def new
