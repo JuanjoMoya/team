@@ -4,9 +4,15 @@ class MessagesController < ApplicationController
   # before_action :group_params,   only: :create
 
   def create
-    # @group = Group.find(params[:id])
+    @group = Group.find(params[:message][:group_id])
 
-    @message = current_user.messages.build(message_params)
+    # @message = current_user.messages.build(params[:message])
+
+    @message = current_user.messages.build(content: params[:message][:content], picture: params[:message][:picture])
+    # Group.find(params[:message][:group_id]).messages << @message
+    @group.messages << @message
+
+    # binding.pry
 
     # SE CREAN LOS MENSAJES EN LA TABLA MESSAGE CON EL GROUP_ID = NIL. NO HE DESCUBIERTO CÓMO SOLUCIONARLO
     # NO SE COMO PUEDO REDIRECCIONAR AL SHOW DEL GRUPO UNA VEZ HE CREADO EL MENSAJE
@@ -29,9 +35,9 @@ class MessagesController < ApplicationController
 
   private
 
-    def message_params
-      params.require(:message).permit(:content, :picture, :group_id)
-    end
+    #def message_params
+    #  params.require(:message).permit(:content, :picture)
+    #end
 
     def correct_user
       @message = current_user.messages.find_by(id: params[:id])
